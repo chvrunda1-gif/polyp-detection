@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolyScope – Clinical Endoscopy AI Platform</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #05080f;
+      --surface: #0c1120;
+      --card: #101828;
+      --card-hover: #141f36;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #00e5a0;
+      --accent-glow: rgba(0, 229, 160, 0.35);
+      --accent2: #00b8ff;
+      --danger: #ff4d6d;
+      --warning: #ffb703;
+      --text: #e8edf5;
+      --muted: #7e90b0;
+      --field-label: #b8c6e2;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Left Illustration Panel ── */
+    .left-panel {
+      flex: 1.15;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 30% 40%, rgba(0, 229, 160, 0.09) 0%, transparent 60%),
+                  radial-gradient(ellipse at 75% 65%, rgba(0, 184, 255, 0.07) 0%, transparent 60%),
+                  #070c18;
+      border-right: 1px solid var(--border);
+    }
+
+    /* Background Scanning Rings & Particles */
+    .scan-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 229, 160, 0.12);
+      animation: pulseGlow 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .scan-ring:nth-child(1) { width: 340px; height: 340px; animation-delay: 0s; }
+    .scan-ring:nth-child(2) { width: 520px; height: 520px; animation-delay: 1.5s; }
+    .scan-ring:nth-child(3) { width: 720px; height: 720px; animation-delay: 3s; }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.25; border-color: rgba(0, 229, 160, 0.12); }
+      50% { transform: scale(1.06); opacity: 0.6; border-color: rgba(0, 229, 160, 0.35); box-shadow: 0 0 40px rgba(0, 229, 160, 0.2); }
+    }
+
+    .panel-content {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+      text-align: center;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(0,229,160,0.25), rgba(0,184,255,0.25));
+      border: 1px solid rgba(0,229,160,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0,229,160,0.25);
+    }
+    .brand-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+
+    .brand-intro {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    /* Medical Colon & Polyp SVG Illustration Container */
+    .illustration-card {
+      background: rgba(16, 24, 40, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(16px);
+      margin-bottom: 24px;
+    }
+
+    .feature-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .pill span { color: var(--accent); }
+
+    /* ── Right Authentication Panel ── */
+    .right-panel {
+      width: 520px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 44px 44px;
+      position: relative;
+    }
+
+    /* Role Switcher Tabs */
+    .role-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: rgba(5, 8, 15, 0.7);
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .role-tab-btn {
+      padding: 10px 8px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .role-tab-btn:hover { color: var(--text); }
+    .role-tab-btn.active {
+      background: var(--card);
+      color: var(--accent);
+      border: 1px solid rgba(0, 229, 160, 0.25);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    .role-tab-btn[data-role="doctor"].active { color: var(--accent2); border-color: rgba(0, 184, 255, 0.3); }
+    .role-tab-btn[data-role="admin"].active { color: var(--warning); border-color: rgba(255, 183, 3, 0.3); }
+
+    /* Demo Access Section */
+    .demo-section {
+      background: rgba(16, 24, 40, 0.5);
+      border: 1px solid rgba(0, 229, 160, 0.2);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+    }
+    .demo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .demo-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+    }
+    .demo-badge {
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 100px;
+      background: rgba(0, 229, 160, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(0, 229, 160, 0.3);
+      font-weight: 700;
+    }
+    .demo-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .btn-demo-quick {
+      padding: 9px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s ease;
+    }
+    .btn-demo-quick:hover {
+      background: var(--card-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .btn-demo-quick.patient-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-demo-quick.doctor-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+    .btn-demo-quick.admin-btn:hover { border-color: var(--warning); color: var(--warning); }
+    .btn-demo-quick small { font-size: 0.65rem; color: var(--muted); font-weight: normal; }
+
+    /* Form Fields */
+    .form-group { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--field-label);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,229,160,0.1);
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), #00c88a);
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #05080f;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 4px 16px var(--accent-glow); }
+
+    @media (max-width: 980px) {
+      .left-panel { display: none; }
+      .right-panel { width: 100%; padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Left Medical Visual Panel -->
+  <div class="left-panel">
+    <div class="scan-ring"></div>
+    <div class="scan-ring"></div>
+    <div class="scan-ring"></div>
+
+    <div class="panel-content">
+      <div class="brand-header">
+        <div class="logo-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2.2">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="3" fill="#00b8ff"/>
+          </svg>
+        </div>
+        <div class="brand-name">PolyScope AI</div>
+      </div>
+
+      <p class="brand-intro">
+        Deep learning computer vision for real-time colorectal polyp detection, spatial boundary localization, and semantic lesion segmentation in colonoscopy imaging.
+      </p>
+
+      <!-- Medical Illustration of Large Intestine with Highlighted Polyp & Magnified View -->
+      <div class="illustration-card">
+        <svg viewBox="0 0 540 320" width="100%" height="auto" style="overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="colonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#142647"/>
+              <stop offset="50%" stop-color="#1c3666"/>
+              <stop offset="100%" stop-color="#122340"/>
+            </linearGradient>
+            <linearGradient id="polypGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff4d6d"/>
+              <stop offset="100%" stop-color="#ff758f"/>
+            </linearGradient>
+            <filter id="polypGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Anatomical Large Intestine Path -->
+          <!-- Cecum & Ascending Colon (Right side in anatomy, Left visually) -->
+          <path d="M 120 250 
+                   C 105 240, 100 200, 100 160 
+                   C 100 120, 110 80, 140 70 
+                   C 180 60, 260 60, 310 70 
+                   C 340 75, 360 110, 360 150 
+                   C 360 190, 350 230, 330 250 
+                   C 310 270, 280 270, 260 255 
+                   C 245 245, 240 260, 240 290" 
+                fill="none" stroke="url(#colonGrad)" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Colonic Haustral Folds (Segment Rings) -->
+          <path d="M 90 200 C 105 200, 105 200, 120 200" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 90 160 C 105 160, 105 160, 120 160" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 90 120 C 105 120, 105 120, 120 120" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 160 60 C 160 75, 160 75, 160 90" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 220 60 C 220 75, 220 75, 220 90" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 280 60 C 280 75, 280 75, 280 90" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 340 120 C 355 120, 355 120, 370 120" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 340 160 C 355 160, 355 160, 370 160" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 340 200 C 355 200, 355 200, 370 200" stroke="#254378" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Highlighted Focal Polyp in Ascending Colon (at x=102, y=145) -->
+          <circle cx="102" cy="145" r="14" fill="none" stroke="#00e5a0" stroke-width="1.5" stroke-dasharray="3 3">
+            <animate attributeName="r" values="12;22;12" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <path d="M 98 140 Q 104 135 110 142 Q 112 150 102 152 Z" fill="url(#polypGrad)" filter="url(#polypGlow)"/>
+
+          <!-- Anatomical Labels -->
+          <text x="50" y="70" fill="#7e90b0" font-size="11" font-weight="600">Ascending Colon</text>
+          <text x="200" y="45" fill="#7e90b0" font-size="11" font-weight="600">Transverse Colon</text>
+          <text x="375" y="70" fill="#7e90b0" font-size="11" font-weight="600">Descending Colon</text>
+          <text x="350" y="270" fill="#7e90b0" font-size="11" font-weight="600">Sigmoid & Rectum</text>
+
+          <!-- Connecting Pointer Line to Magnified Inspection Callout -->
+          <path d="M 112 145 L 180 145 L 210 185 L 410 185" fill="none" stroke="#00e5a0" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <circle cx="112" cy="145" r="3" fill="#00e5a0"/>
+
+          <!-- Magnified Lens Callout of Mucosal Polyp -->
+          <g transform="translate(420, 185)">
+            <!-- Lens Ring Outer -->
+            <circle cx="50" cy="0" r="48" fill="#0c1120" stroke="#00e5a0" stroke-width="2.5" filter="url(#polypGlow)"/>
+            <circle cx="50" cy="0" r="44" fill="#111c33" stroke="rgba(0,184,255,0.4)" stroke-width="1.5"/>
+
+            <!-- High-Magnification Mucosal Texture & Polyp Structure -->
+            <!-- Mucosa Base -->
+            <path d="M 12 15 Q 50 20 88 15" stroke="#486581" stroke-width="12" fill="none"/>
+            <!-- Raised Sessile Adenoma (Paris Type Is) -->
+            <path d="M 26 12 C 26 -22, 74 -22, 74 12 Z" fill="#ff4d6d" stroke="#ff758f" stroke-width="2"/>
+            <!-- Vascular Pit Pattern (Kudo classification simulation) -->
+            <path d="M 36 2 Q 44 -12 40 -16" stroke="#990024" stroke-width="1.5" fill="none"/>
+            <path d="M 48 4 Q 50 -14 54 -18" stroke="#990024" stroke-width="1.5" fill="none"/>
+            <path d="M 60 2 Q 58 -10 64 -14" stroke="#990024" stroke-width="1.5" fill="none"/>
+
+            <!-- AI Bounding Box HUD in Magnified View -->
+            <rect x="20" y="-26" width="60" height="42" fill="none" stroke="#00e5a0" stroke-width="1.5" stroke-dasharray="4 2"/>
+            <text x="50" y="36" fill="#00e5a0" font-size="9.5" font-weight="700" text-anchor="middle" font-family="'JetBrains Mono', monospace">U-NET: 96.4% CONF</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="feature-pills">
+        <div class="pill"><span>◈</span> Dual CNN & U-Net Pipeline</div>
+        <div class="pill"><span>◈</span> High-Resolution Localization</div>
+        <div class="pill"><span>◈</span> Role-Based Clinical Portals</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Authentication Panel -->
+  <div class="right-panel">
+    <div style="margin-bottom:24px;">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:1.9rem;line-height:1.1;margin-bottom:6px;">Sign in to PolyScope</h2>
+      <p style="font-size:0.85rem;color:var(--muted);">Select your portal role or use a 1-click demo account below.</p>
+    </div>
+
+    <!-- 1-Click Demo Logins -->
+    <div class="demo-section">
+      <div class="demo-header">
+        <div class="demo-title">⚡ 1-Click Instant Demo Portals</div>
+        <div class="demo-badge">PRE-CONFIGURED DATA</div>
+      </div>
+      <div class="demo-buttons-grid">
+        <button class="btn-demo-quick patient-btn" type="button" onclick="triggerDemoLogin('patient')">
+          👤 Demo Patient
+          <small>John Doe (Case Tracking)</small>
+        </button>
+        <button class="btn-demo-quick doctor-btn" type="button" onclick="triggerDemoLogin('doctor')">
+          🩺 Demo Doctor
+          <small>Dr. Sharma (AI Control)</small>
+        </button>
+        <button class="btn-demo-quick admin-btn" type="button" onclick="triggerDemoLogin('admin')">
+          ⚙️ Demo Admin
+          <small>Governance & Telemetry</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- Role Switcher Tabs -->
+    <div class="role-tabs">
+      <button class="role-tab-btn active" type="button" data-role="patient" onclick="selectRole('patient')">
+        👤 Patient
+      </button>
+      <button class="role-tab-btn" type="button" data-role="doctor" onclick="selectRole('doctor')">
+        🩺 Doctor
+      </button>
+      <button class="role-tab-btn" type="button" data-role="admin" onclick="selectRole('admin')">
+        ⚙️ Admin
+      </button>
+    </div>
+
+    <form id="loginForm" onsubmit="handleStandardLogin(event)">
+      <div class="form-group">
+        <label id="emailLabel">Patient Name or Email Address</label>
+        <input type="text" id="emailInput" class="form-input" placeholder="e.g. John Doe, patient, or patient@polyscope.ai" required autocomplete="username" />
+      </div>
+
+      <div class="form-group">
+        <label style="display:flex;justify-content:space-between;">
+          <span>Password</span>
+          <span style="cursor:pointer;color:var(--accent2);text-transform:none;font-weight:normal;" onclick="togglePassword()">Show</span>
+        </label>
+        <input type="password" id="passwordInput" class="form-input" placeholder="••••••••" required autocomplete="current-password" />
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-submit">
+        <span>Enter Portal</span> →
+      </button>
+    </form>
+
+    <div style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--muted);">
+      New patient? <a href="/register.html" style="color:var(--accent);font-weight:600;">Register an account</a>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <a href="/" style="font-size:0.8rem;color:var(--muted);">← Return to Public Website</a>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/static/js/auth.js"></script>
+  <script>
+    let currentRole = 'patient';
+
+    function selectRole(role) {
+      currentRole = role;
+      document.querySelectorAll('.role-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-role') === role);
+      });
+
+      const label = document.getElementById('emailLabel');
+      const input = document.getElementById('emailInput');
+      if (role === 'patient') {
+        label.textContent = 'Patient Name, Username, or Email';
+        input.placeholder = 'e.g. John Doe, patient, or patient@polyscope.ai';
+      } else if (role === 'doctor') {
+        label.textContent = 'Physician / Doctor Name or Email';
+        input.placeholder = 'e.g. Dr. Rajesh Sharma, doctor, or doctor@polyscope.ai';
+      } else {
+        label.textContent = 'Administrator Name or Email';
+        input.placeholder = 'e.g. Sarah Lin, admin, or admin@polyscope.ai';
+      }
+    }
+
+    function togglePassword() {
+      const p = document.getElementById('passwordInput');
+      p.type = p.type === 'password' ? 'text' : 'password';
+    }
+
+    async function triggerDemoLogin(role) {
+      showToast(`Initiating 1-Click login as Demo ${role.toUpperCase()}...`, 'info');
+      try {
+        const res = await fetch(`/api/auth/demo-login/${role}`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Demo login failed');
+
+        Auth.setCsrfToken(data.csrf_token);
+        showToast(`Authenticated as ${data.user.name}. Redirecting...`, 'success');
+        setTimeout(() => {
+          window.location.href = data.portal_url;
+        }, 300);
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+
+    async function handleStandardLogin(e) {
+      e.preventDefault();
+      const identifier = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const btn = document.getElementById('submitBtn');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span>Verifying Credentials...</span>';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            identifier: identifier,
+            name: identifier,
+            username: identifier,
+            email: identifier,
+            password: password,
+            role: currentRole
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login failed');
+
+        Auth.setCsrfToken(data.csrf_token);
+        showToast(`Login verified as ${data.user.name}. Accessing portal...`, 'success');
+        setTimeout(() => {
+          window.location.href = data.portal_url;
+        }, 350);
+      } catch (err) {
+        showToast(err.message, 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<span>Enter Portal</span> →';
+      }
+    }
+
+  </script>
+</body>
+</html>

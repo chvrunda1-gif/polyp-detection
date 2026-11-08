@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolyScope – Admin Governance Portal</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/portals.css">
+</head>
+<body>
+
+  <div class="portal-wrapper">
+    <!-- Sidebar -->
+    <aside class="portal-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffb703" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>PolyScope</h1>
+          <div class="portal-tag" style="color:var(--warning);">Admin Portal</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <div class="menu-category">System Governance</div>
+        <div class="nav-link active" data-tab="overviewTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Platform Overview
+        </div>
+        <div class="nav-link" data-tab="usersTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          User Accounts
+        </div>
+        <div class="nav-link" data-tab="scansTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          Scan Image Monitor
+        </div>
+        <div class="nav-link" data-tab="evalTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/><path d="M2 12h20"/></svg>
+          AI Model Evaluation
+        </div>
+        <div class="nav-link" data-tab="logsTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Security Audit Logs
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar" id="adminAvatarLetter" style="background:var(--warning);color:#070b14;">A</div>
+          <div class="user-details">
+            <div class="user-name" id="adminNameDisplay">Loading...</div>
+            <div class="user-role" id="adminEmailDisplay">Administrator</div>
+          </div>
+          <button class="btn btn-secondary" style="padding:6px;border:none;" onclick="Auth.logout()" title="Sign Out">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="portal-main">
+      <div class="portal-topbar">
+        <div class="page-headline">
+          <h2>System Administration & Governance</h2>
+          <p>Monitor platform operations, user permissions, audit logs, and verified AI performance.</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="engine-indicator">
+            <span class="pulse-dot" style="background:var(--warning);box-shadow:0 0 8px var(--warning);"></span>
+            <span id="sysEngine">Loading System Telemetry...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 1: OVERVIEW -->
+      <div class="tab-content active" id="overviewTab">
+        <div class="stats-grid">
+          <div class="stat-box warning">
+            <div class="stat-label">Total Users</div>
+            <div class="stat-num" id="admTotalUsers">0</div>
+            <div class="stat-subtext">Across all platform roles</div>
+          </div>
+          <div class="stat-box green">
+            <div class="stat-label">Registered Patients</div>
+            <div class="stat-num" id="admTotalPatients">0</div>
+            <div class="stat-subtext">Patient portals active</div>
+          </div>
+          <div class="stat-box cyan">
+            <div class="stat-label">Active Doctors</div>
+            <div class="stat-num" id="admTotalDoctors">0</div>
+            <div class="stat-subtext">Licensed gastroenterologists</div>
+          </div>
+          <div class="stat-box red">
+            <div class="stat-label">Total Scans Processed</div>
+            <div class="stat-num" id="admTotalScans">0</div>
+            <div class="stat-subtext" id="admAdrRate">ADR: 0.0%</div>
+          </div>
+        </div>
+
+        <!-- Telemetry Details -->
+        <div class="glass-card" style="margin-bottom:24px;">
+          <h3 style="margin-bottom:16px;font-size:1.15rem;">Host Server Resource Telemetry</h3>
+          <div class="clinical-param-grid">
+            <div class="param-item">
+              <div class="param-key">CPU Utilization</div>
+              <div class="param-val" id="sysCpu">--%</div>
+            </div>
+            <div class="param-item">
+              <div class="param-key">Memory (RAM)</div>
+              <div class="param-val" id="sysRam">--%</div>
+            </div>
+            <div class="param-item">
+              <div class="param-key">Storage Availability</div>
+              <div class="param-val" id="sysDisk">-- GB</div>
+            </div>
+            <div class="param-item">
+              <div class="param-key">Security Configuration</div>
+              <div class="param-val" style="color:var(--primary);">CSRF Active • Salted Scrypt</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: USER MANAGEMENT -->
+      <div class="tab-content" id="usersTab">
+        <div class="glass-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+            <div style="display:flex;gap:10px;align-items:center;">
+              <input type="text" id="userSearchInput" class="form-input" style="width:260px;padding:8px 12px;font-size:0.85rem;" placeholder="Search by name or email..." oninput="loadUsersTable()">
+              <button class="btn btn-secondary" style="padding:8px 12px;font-size:0.8rem;" onclick="loadUsersTable('patient')">Patients</button>
+              <button class="btn btn-secondary" style="padding:8px 12px;font-size:0.8rem;" onclick="loadUsersTable('doctor')">Doctors</button>
+              <button class="btn btn-secondary" style="padding:8px 12px;font-size:0.8rem;" onclick="loadUsersTable('admin')">Admins</button>
+              <button class="btn btn-secondary" style="padding:8px 12px;font-size:0.8rem;" onclick="loadUsersTable('')">All</button>
+            </div>
+            <button class="btn btn-primary" onclick="openCreateUserModal()">+ Add New User</button>
+          </div>
+
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name & Email</th>
+                  <th>Role</th>
+                  <th>Assigned Doctor</th>
+                  <th>Total Scans</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: GLOBAL SCAN MONITOR -->
+      <div class="tab-content" id="scansTab">
+        <div class="glass-card">
+          <h3 style="margin-bottom:18px;font-size:1.2rem;">Global Colonoscopy Image Feed</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Scan ID</th>
+                  <th>Patient Name</th>
+                  <th>File Name</th>
+                  <th>AI Finding</th>
+                  <th>Confidence</th>
+                  <th>Engine Used</th>
+                  <th>Date & Time</th>
+                </tr>
+              </thead>
+              <tbody id="globalScansBody">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: AI MODEL EVALUATION -->
+      <div class="tab-content" id="evalTab">
+        <div class="glass-card" style="margin-bottom:24px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:12px;">
+            <div>
+              <h3 style="font-size:1.2rem;">Model Performance & Quantitative Evaluation</h3>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-top:4px;">
+                Calculate true mathematical validation metrics (Accuracy, Precision, Recall, F1, Dice coefficient, and IoU) on ground truth verification sets.
+              </p>
+            </div>
+            <button id="evalTriggerBtn" class="btn btn-primary" onclick="triggerLiveModelEvaluation()">
+              🚀 Run Live Verification Evaluation
+            </button>
+          </div>
+          <div id="evalLoader" style="display:none;color:var(--cyan);font-size:0.85rem;margin-top:10px;">
+            ⏳ Computing segmentation IoU, Dice coefficients, and confusion matrix on paired test images...
+          </div>
+        </div>
+
+        <!-- Evaluation Results Display Card -->
+        <div class="glass-card" id="evalResultsCard" style="display:none;">
+          <h4 style="margin-bottom:16px;color:var(--primary);font-size:1.1rem;">Verified Test Evaluation Metrics</h4>
+          <div class="stats-grid">
+            <div class="stat-box green">
+              <div class="stat-label">Accuracy</div>
+              <div class="stat-num" id="metricAccuracy">--</div>
+              <div class="stat-subtext">Overall classification accuracy</div>
+            </div>
+            <div class="stat-box cyan">
+              <div class="stat-label">Sensitivity / Recall</div>
+              <div class="stat-num" id="metricRecall">--</div>
+              <div class="stat-subtext">Polyp detection sensitivity</div>
+            </div>
+            <div class="stat-box green">
+              <div class="stat-label">Precision</div>
+              <div class="stat-num" id="metricPrecision">--</div>
+              <div class="stat-subtext">Positive predictive value</div>
+            </div>
+            <div class="stat-box cyan">
+              <div class="stat-label">F1-Score</div>
+              <div class="stat-num" id="metricF1">--</div>
+              <div class="stat-subtext">Harmonic mean of P & R</div>
+            </div>
+            <div class="stat-box warning">
+              <div class="stat-label">Dice Coefficient</div>
+              <div class="stat-num" id="metricDice">--</div>
+              <div class="stat-subtext">Pixel overlap similarity</div>
+            </div>
+            <div class="stat-box warning">
+              <div class="stat-label">IoU (Jaccard Index)</div>
+              <div class="stat-num" id="metricIoU">--</div>
+              <div class="stat-subtext">Intersection-over-Union</div>
+            </div>
+          </div>
+
+          <h4 style="margin:20px 0 10px;font-size:0.95rem;">Confusion Matrix Breakdown</h4>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+            <div class="param-item">
+              <div class="param-key">True Positives (TP)</div>
+              <div class="param-val" id="cmTp" style="color:var(--primary);">0</div>
+            </div>
+            <div class="param-item">
+              <div class="param-key">False Positives (FP)</div>
+              <div class="param-val" id="cmFp" style="color:var(--danger);">0</div>
+            </div>
+            <div class="param-item">
+              <div class="param-key">True Negatives (TN)</div>
+              <div class="param-val" id="cmTn" style="color:var(--cyan);">0</div>
+            </div>
+            <div class="param-item">
+              <div class="param-key">False Negatives (FN)</div>
+              <div class="param-val" id="cmFn" style="color:var(--danger);">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: AUDIT LOGS -->
+      <div class="tab-content" id="logsTab">
+        <div class="glass-card">
+          <h3 style="margin-bottom:18px;font-size:1.2rem;">Platform Activity & Security Audit Logs</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>User Email & Role</th>
+                  <th>Action</th>
+                  <th>Details</th>
+                  <th>IP Address</th>
+                </tr>
+              </thead>
+              <tbody id="auditLogsBody">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Create User Modal -->
+  <div class="modal-overlay" id="createUserModal">
+    <div class="modal-card" style="max-width:520px;">
+      <div class="modal-header">
+        <h3>Create New User Account</h3>
+        <button class="btn btn-secondary" style="padding:4px 8px;" onclick="closeCreateUserModal()">✕</button>
+      </div>
+      <form onsubmit="submitCreateUser(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="newUserName" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="newUserEmail" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Initial Password</label>
+            <input type="password" id="newUserPassword" class="form-input" required minlength="6">
+          </div>
+          <div class="form-group">
+            <label class="form-label">System Role</label>
+            <select id="newUserRole" class="form-select">
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" id="newUserPhone" class="form-input">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeCreateUserModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div class="modal-overlay" id="editUserModal">
+    <div class="modal-card" style="max-width:480px;">
+      <div class="modal-header">
+        <h3>Edit User Permissions</h3>
+        <button class="btn btn-secondary" style="padding:4px 8px;" onclick="closeEditUserModal()">✕</button>
+      </div>
+      <form onsubmit="submitEditUser(event)">
+        <input type="hidden" id="editUserId">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">User Name</label>
+            <input type="text" id="editUserName" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role</label>
+            <select id="editUserRole" class="form-select">
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Account Status</label>
+            <select id="editUserStatus" class="form-select">
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeEditUserModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

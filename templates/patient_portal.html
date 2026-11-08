@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolyScope – Patient Healthcare Portal</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/portals.css">
+  <style>
+    :root {
+      --bg: #05080f;
+      --surface: #0c1120;
+      --card: #101828;
+      --card-hover: #141f36;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #00e5a0;
+      --accent2: #00b8ff;
+      --warning: #ffb703;
+      --danger: #ff4d6d;
+      --text: #e8edf5;
+      --muted: #7e90b0;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .status-stepper {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 28px 0 20px 0;
+    }
+    .status-stepper::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1;
+    }
+    .step-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 120px;
+    }
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 8px;
+      transition: all 0.3s;
+    }
+    .step-node.completed .step-circle {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #05080f;
+    }
+    .step-node.active .step-circle {
+      background: var(--surface);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 12px rgba(0, 229, 160, 0.5);
+    }
+    .step-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .step-node.active .step-label,
+    .step-node.completed .step-label {
+      color: var(--text);
+    }
+    .friendly-box {
+      background: rgba(16, 24, 40, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .friendly-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 4px;
+      background: var(--accent);
+    }
+    .friendly-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .friendly-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .friendly-item-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .friendly-item-desc {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-wrapper">
+    <!-- Sidebar -->
+    <aside class="portal-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5a0" stroke-width="2.2">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="3" fill="#00b8ff"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>PolyScope</h1>
+          <div class="portal-tag">Patient Portal</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <div class="menu-category">My Health Journey</div>
+        <div class="nav-link active" data-tab="dashboardTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          My Case & Findings
+        </div>
+        <div class="nav-link" data-tab="reportsTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Approved Reports (PDF)
+        </div>
+        <div class="nav-link" data-tab="followupTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Surveillance Guidelines
+        </div>
+
+        <div class="menu-category" style="margin-top:16px;">My Account</div>
+        <div class="nav-link" data-tab="profileTab">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile & Doctor Details
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar" id="avatarLetter">P</div>
+          <div class="user-details">
+            <div class="user-name" id="patientNameDisplay">Loading...</div>
+            <div class="user-role" id="patientIdDisplay">Patient ID</div>
+          </div>
+          <button class="btn btn-secondary" style="padding:6px;border:none;" onclick="Auth.logout()" title="Sign Out">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="portal-main">
+      <div class="portal-topbar">
+        <div class="page-headline">
+          <h2 id="portalGreeting">Welcome to your Patient Portal</h2>
+          <p id="portalSub">Review your gastroenterology case updates, doctor conclusions, and care instructions.</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="engine-indicator">
+            <span class="pulse-dot"></span>
+            <span id="caseStatusBadge">Checking Active Case...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 1: MY CASE & FINDINGS -->
+      <div class="tab-content active" id="dashboardTab">
+        <!-- Patient Summary Card -->
+        <div class="stats-grid">
+          <div class="stat-box green">
+            <div class="stat-label">Patient Identifier</div>
+            <div class="stat-num" id="statPatientId" style="font-size:1.4rem;">POL-PT-101</div>
+            <div class="stat-subtext" id="statPatientEmail">patient@polyscope.ai</div>
+          </div>
+          <div class="stat-box cyan">
+            <div class="stat-label">Attending Gastroenterologist</div>
+            <div class="stat-num" id="statDoctorName" style="font-size:1.3rem;">Dr. Rajesh Sharma, MD</div>
+            <div class="stat-subtext" id="statDoctorPhone">Gastroenterology & Endoscopy</div>
+          </div>
+          <div class="stat-box warning">
+            <div class="stat-label">Case Status</div>
+            <div class="stat-num" id="statCaseStatus" style="font-size:1.2rem;">Follow-up required</div>
+            <div class="stat-subtext" id="statResolution">Resolved: No</div>
+          </div>
+          <div class="stat-box red">
+            <div class="stat-label">Recommended Follow-Up</div>
+            <div class="stat-num" id="statFollowupDate" style="font-size:1.3rem;">12 Months</div>
+            <div class="stat-subtext">Per MSTF clinical guidelines</div>
+          </div>
+        </div>
+
+        <!-- Visual Case Progress Stepper -->
+        <div class="glass-card" style="margin-bottom:24px;">
+          <h3 style="font-size:1.05rem;margin-bottom:4px;">Case Progress Tracker</h3>
+          <p style="font-size:0.8rem;color:var(--muted);">Track your colonoscopy examination lifecycle from initial upload to clinical resolution:</p>
+          
+          <div class="status-stepper" id="stepperContainer">
+            <div class="step-node completed" id="step1">
+              <div class="step-circle">1</div>
+              <div class="step-label">Image Uploaded</div>
+            </div>
+            <div class="step-node completed" id="step2">
+              <div class="step-circle">2</div>
+              <div class="step-label">Analysis Pending</div>
+            </div>
+            <div class="step-node completed" id="step3">
+              <div class="step-circle">3</div>
+              <div class="step-label">Under Doctor Review</div>
+            </div>
+            <div class="step-node active" id="step4">
+              <div class="step-circle">4</div>
+              <div class="step-label">Follow-up / Action Required</div>
+            </div>
+            <div class="step-node" id="step5">
+              <div class="step-circle">5</div>
+              <div class="step-label">Resolved</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patient-Friendly Medical Results -->
+        <div class="friendly-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;">Doctor-Reviewed Clinical Findings</h3>
+            <span class="badge badge-green" id="approvedBadge">✓ DOCTOR APPROVED FINDINGS</span>
+          </div>
+          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:16px;">
+            These conclusions have been reviewed, verified, and authorized by your attending physician.
+          </p>
+
+          <div class="friendly-grid">
+            <div class="friendly-item">
+              <div class="friendly-item-title">1. What Was Observed</div>
+              <div class="friendly-item-desc" id="findingObservation">
+                A solitary small sessile mucosal elevation was identified and carefully examined in the ascending colon.
+              </div>
+            </div>
+
+            <div class="friendly-item">
+              <div class="friendly-item-title">2. Was a Polyp Detected?</div>
+              <div class="friendly-item-desc" id="findingPolypStatus" style="color:var(--accent);font-weight:700;">
+                Yes — Suspected tubular adenoma confirmed and removed via cold-snare polypectomy.
+              </div>
+            </div>
+
+            <div class="friendly-item">
+              <div class="friendly-item-title">3. Doctor's Clinical Conclusion</div>
+              <div class="friendly-item-desc" id="findingConclusion">
+                Endoscopic optical biopsy consistent with a benign tubular adenoma. Clean surgical mucosal margins were achieved without complications.
+              </div>
+            </div>
+
+            <div class="friendly-item">
+              <div class="friendly-item-title">4. What You Should Do Next</div>
+              <div class="friendly-item-desc" id="findingNextSteps">
+                Avoid heavy physical lifting for 48 hours. Stay well-hydrated with high-fiber meals. Await histological biopsy confirmation from the lab.
+              </div>
+            </div>
+
+            <div class="friendly-item">
+              <div class="friendly-item-title">5. Consulting Specialist</div>
+              <div class="friendly-item-desc" id="findingDoctorContact">
+                Dr. Rajesh Sharma, MD — Department of Digestive Health & Interventional Endoscopy.
+              </div>
+            </div>
+
+            <div class="friendly-item">
+              <div class="friendly-item-title">6. Issue Resolution Status</div>
+              <div class="friendly-item-desc" id="findingResolutionStatus">
+                <strong>Under Active Surveillance (Follow-up Required in 12 Months)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: APPROVED REPORTS (PDF) -->
+      <div class="tab-content" id="reportsTab">
+        <div class="glass-card">
+          <h3 style="margin-bottom:6px;font-size:1.2rem;">My Approved Diagnostic Reports</h3>
+          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:20px;">
+            Access and download finalized clinical endoscopy reports signed by your doctor.
+          </p>
+
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Report Code</th>
+                  <th>Title</th>
+                  <th>Procedure Date</th>
+                  <th>Gastroenterologist</th>
+                  <th>Resolution Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="approvedReportsTableBody">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: SURVEILLANCE GUIDELINES -->
+      <div class="tab-content" id="followupTab">
+        <div class="glass-card" style="margin-bottom:20px;">
+          <h3 style="font-size:1.2rem;margin-bottom:6px;">Post-Polypectomy & Colonoscopy Care Instructions</h3>
+          <p style="font-size:0.85rem;color:var(--muted);">
+            Clinical guidelines based on the US Multi-Society Task Force on Colorectal Cancer.
+          </p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:18px;">
+          <div class="friendly-box" style="margin-bottom:0;">
+            <h4 style="color:var(--accent);margin-bottom:8px;font-size:1rem;">Recovery (First 48–72 Hours)</h4>
+            <p style="font-size:0.88rem;color:var(--text);line-height:1.6;">
+              Avoid heavy lifting, intense cardiovascular workouts, and non-steroidal anti-inflammatory drugs (NSAIDs) unless approved by your doctor. If you experience fever, acute abdominal pain, or significant rectal bleeding, contact your clinic immediately.
+            </p>
+          </div>
+
+          <div class="friendly-box" style="margin-bottom:0;">
+            <h4 style="color:var(--accent2);margin-bottom:8px;font-size:1rem;">Dietary & Lifestyle Health</h4>
+            <p style="font-size:0.88rem;color:var(--text);line-height:1.6;">
+              Maintain high dietary fiber intake (25–35 grams daily) with fresh fruits, leafy vegetables, oats, and legumes. Drink at least 2 liters of water daily and moderate intake of processed red meats.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: PROFILE & DOCTOR DETAILS -->
+      <div class="tab-content" id="profileTab">
+        <div class="glass-card" style="max-width:680px;">
+          <h3 style="margin-bottom:18px;font-size:1.2rem;">My Profile & Assigned Care Team</h3>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="profPatientName" class="form-input" disabled style="opacity:0.8;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Patient Identification Code</label>
+            <input type="text" id="profPatientCode" class="form-input" disabled style="opacity:0.8;">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="form-group">
+              <label class="form-label">Age</label>
+              <input type="text" id="profPatientAge" class="form-input" disabled style="opacity:0.8;">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gender</label>
+              <input type="text" id="profPatientGender" class="form-input" disabled style="opacity:0.8;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Assigned Gastroenterologist</label>
+            <input type="text" id="profPatientDoctor" class="form-input" disabled style="opacity:0.8;color:var(--accent);">
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/patient.js"></script>
+</body>
+</html>

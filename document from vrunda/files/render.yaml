@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: polyscope-demo
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    healthCheckPath: /api/health
+    disk:
+      name: polyscope-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: APP_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/polyscope.sqlite3
+      - key: MODEL_PATH
+        value: /var/data/polyp_segmenter.keras

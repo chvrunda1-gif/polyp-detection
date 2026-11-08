@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+tf_env/
+.env
+instance/*.sqlite3
+users.json
+data/
+Kvasir-seg/
+models/

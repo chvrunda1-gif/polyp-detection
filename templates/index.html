@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolyScope – AI-Based Detection of Elusive Polyps in Colonoscopy Images</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/portals.css">
+  <link rel="stylesheet" href="/static/css/landing.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="landing-nav">
+    <div class="nav-brand">
+      <div class="nav-brand-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9" stroke="url(#g1)" />
+          <circle cx="12" cy="12" r="3" fill="#00e5a0" />
+          <path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="#00b8ff" />
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="24" y2="24">
+              <stop offset="0%" stop-color="#00e5a0"/>
+              <stop offset="100%" stop-color="#00b8ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="nav-brand-title">PolyScope AI</div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#hero">Overview</a></li>
+      <li><a href="#portals">Application Portals</a></li>
+      <li><a href="#pipeline">AI Pipeline</a></li>
+      <li><a href="#clinical-ai">Doctor AI Detection</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="/login.html" class="btn btn-secondary">Sign In</a>
+      <a href="/register.html" class="btn btn-primary">Register Patient</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span> Medical AI Endoscopy Intelligence
+      </div>
+      <h1 class="hero-title">
+        AI-Based Detection of <span>Elusive Polyps</span> in Colonoscopy Images
+      </h1>
+      <p class="hero-subtitle">
+        PolyScope combines deep Convolutional Neural Networks (CNN) for real-time polyp classification and U-Net encoder-decoder architectures for precise semantic lesion segmentation.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#portals" class="btn btn-primary" style="padding:14px 28px;font-size:1rem;">
+          Access Application Portals →
+        </a>
+        <a href="/login.html" class="btn btn-secondary" style="padding:14px 24px;font-size:1rem;">
+          🩺 Access Doctor AI Detection Centre →
+        </a>
+      </div>
+
+      <div class="hero-kpis">
+        <div class="hero-kpi-item">
+          <div class="kpi-val" style="color:var(--primary);">CNN + U-Net</div>
+          <div class="kpi-label">Dual AI Architecture</div>
+        </div>
+        <div class="hero-kpi-item">
+          <div class="kpi-val" style="color:var(--cyan);">&lt;35 ms</div>
+          <div class="kpi-label">Inference Latency</div>
+        </div>
+        <div class="hero-kpi-item">
+          <div class="kpi-val" style="color:var(--warning);">3 Portals</div>
+          <div class="kpi-label">Patient • Doctor • Admin</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Interactive Split Image Showcase -->
+    <div class="hero-visual-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span class="badge badge-green">Live Model Comparison</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">Drag Slider Left / Right</span>
+      </div>
+      <div class="split-viewer" id="heroViewer">
+        <div class="split-base">
+          <img src="/static/samples/sample_polyp_1.jpg" alt="Raw Endoscopic Frame">
+        </div>
+        <div class="split-overlay">
+          <img src="/static/samples/sample_polyp_1.jpg" alt="Segmented Frame" style="filter: drop-shadow(0 0 12px rgba(0,229,160,0.8));">
+        </div>
+        <div class="split-slider-line">
+          <div class="split-handle">◄ ►</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
+        <span>Original Endoscopy View</span>
+        <span style="color:var(--primary);font-weight:600;">AI U-Net Segmentation & HUD</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application Portals Section -->
+  <section class="portals-section" id="portals">
+    <div class="section-header">
+      <span class="badge badge-cyan" style="margin-bottom:12px;">Unified Healthcare Ecosystem</span>
+      <h2>Three Dedicated Clinical Portals</h2>
+      <p>PolyScope delivers tailored workflows for patients, gastroenterologists, and hospital administrators.</p>
+    </div>
+
+    <div class="portals-grid">
+      <!-- Patient Portal -->
+      <div class="portal-card patient">
+        <div class="portal-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <h3 class="portal-card-title">Patient Portal</h3>
+        <p class="portal-card-desc">
+          Empowering patients with secure image upload, instant AI detection visualization, verified reports, and personalized follow-up instructions.
+        </p>
+        <ul class="portal-features-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Personal profile & doctor assignment
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Secure endoscopy image upload for physician analysis
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            View doctor-reviewed medical findings &amp; approved reports
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Access historical records & personalized follow-up care
+          </li>
+        </ul>
+        <a href="/login.html" class="btn btn-primary" style="width:100%;">Enter Patient Portal →</a>
+      </div>
+
+      <!-- Doctor Portal -->
+      <div class="portal-card doctor">
+        <div class="portal-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+          </svg>
+        </div>
+        <h3 class="portal-card-title">Doctor Portal</h3>
+        <p class="portal-card-desc">
+          High-performance clinical workstation for gastroenterologists to review scans, inspect segmentation masks, and append diagnostic impressions.
+        </p>
+        <ul class="portal-features-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Assigned patient directory & risk triaging
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            In-depth CNN + U-Net telemetry inspector
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Morphology (Paris class, mm diameter)
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Clinical notes, biopsy advice & sign-off
+          </li>
+        </ul>
+        <a href="/login.html" class="btn btn-cyan" style="width:100%;">Enter Doctor Portal →</a>
+      </div>
+
+      <!-- Admin Portal -->
+      <div class="portal-card admin">
+        <div class="portal-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <h3 class="portal-card-title">Admin Portal</h3>
+        <p class="portal-card-desc">
+          Governance and system surveillance center: manage user accounts, assign roles, monitor platform activity logs, and evaluate AI model metrics.
+        </p>
+        <ul class="portal-features-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            User management (Patient, Doctor, Admin)
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Global scan feed & ADR metric tracking
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Server CPU/RAM/Disk live telemetry
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Live model evaluation (Dice, IoU, F1)
+          </li>
+        </ul>
+        <a href="/login.html" class="btn btn-secondary" style="width:100%;border-color:var(--warning);color:var(--warning);">Enter Admin Portal →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Pipeline Architecture -->
+  <section class="pipeline-section" id="pipeline">
+    <div class="pipeline-container">
+      <div class="section-header">
+        <span class="badge badge-green" style="margin-bottom:12px;">Under The Hood</span>
+        <h2>Endoscopic AI Inference Pipeline</h2>
+        <p>From wet mucosal frame acquisition to pixel-level lesion boundary localization.</p>
+      </div>
+
+      <div class="pipeline-steps-row">
+        <div class="pipeline-step-box">
+          <div class="step-number">STEP 01</div>
+          <div class="step-title">Preprocessing & CLAHE</div>
+          <div class="step-desc">
+            Inpaints harsh specular reflections and applies Contrast Limited Adaptive Histogram Equalization on the LAB color space to enhance mucosal vascular pit patterns.
+          </div>
+        </div>
+
+        <div class="pipeline-step-box">
+          <div class="step-number">STEP 02</div>
+          <div class="step-title">CNN Classification</div>
+          <div class="step-desc">
+            Deep binary convolutional neural network evaluates global feature maps, producing probability of polyp presence and confidence score.
+          </div>
+        </div>
+
+        <div class="pipeline-step-box">
+          <div class="step-number">STEP 03</div>
+          <div class="step-title">U-Net Segmentation</div>
+          <div class="step-desc">
+            Four-level encoder-decoder with skip connections synthesizes low-level spatial texture and high-level semantics to segment exact lesion borders.
+          </div>
+        </div>
+
+        <div class="pipeline-step-box">
+          <div class="step-number">STEP 04</div>
+          <div class="step-title">HUD & Clinical Metrics</div>
+          <div class="step-desc">
+            Extracts lesion contour, computes bounding box reticle, estimates Paris classification, calculates millimeter diameter, and formats clinical export.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doctor-Supervised AI Detection Centre Showcase -->
+  <section class="portals-section" id="clinical-ai">
+    <div class="section-header">
+      <span class="badge badge-cyan" style="margin-bottom:12px;">Physician-Supervised Diagnostic Workflow</span>
+      <h2>AI Detection Centre (Doctor Portal Exclusive)</h2>
+      <p>In accordance with medical software safety standards, AI polyp classification and U-Net segmentation are strictly conducted inside the Doctor Portal under specialist review.</p>
+    </div>
+
+    <div class="studio-grid" style="max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;align-items:center;">
+      <div class="glass-card" style="padding:28px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <span class="badge badge-green">Clinical AI Workflow</span>
+          <span style="font-size:0.8rem;color:var(--text-muted);">Role-Based Security Enforced</span>
+        </div>
+        <h3 style="font-size:1.35rem;margin-bottom:16px;color:var(--text);">How Polyp Detection Operates in Practice</h3>
+        
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(0,229,160,0.12);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</div>
+            <div>
+              <strong style="color:var(--text);font-size:0.95rem;">Patient Intake & Image Submission</strong>
+              <p style="font-size:0.84rem;color:var(--text-muted);margin:2px 0 0;">Patients upload their high-definition endoscopy frames securely. Images are queued directly for attending physician evaluation.</p>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(0,184,255,0.12);color:var(--cyan);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</div>
+            <div>
+              <strong style="color:var(--text);font-size:0.95rem;">Dual-Engine Deep Inference (CNN + U-Net)</strong>
+              <p style="font-size:0.84rem;color:var(--text-muted);margin:2px 0 0;">The attending doctor launches the AI Detection Centre to run binary polyp detection, Paris morphology estimation, and pixel-level semantic mask segmentation.</p>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(255,184,0,0.12);color:var(--warning);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</div>
+            <div>
+              <strong style="color:var(--text);font-size:0.95rem;">Comparative Split Inspection &amp; Doctor Sign-Off</strong>
+              <p style="font-size:0.84rem;color:var(--text-muted);margin:2px 0 0;">Physicians compare raw mucosal tissue against HUD segmentation overlays, verify or override AI findings, and append clinical impressions.</p>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(0,229,160,0.12);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">4</div>
+            <div>
+              <strong style="color:var(--text);font-size:0.95rem;">Official Diagnostic Report Dispatch</strong>
+              <p style="font-size:0.84rem;color:var(--text-muted);margin:2px 0 0;">Upon doctor sign-off, a cryptographically hashed clinical report is archived. Patients receive clear, reassuring next steps in their patient portal.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="/login.html" class="btn btn-cyan" style="padding:12px 22px;font-size:0.92rem;">
+            🩺 Open Doctor AI Detection Centre →
+          </a>
+          <a href="/register.html" class="btn btn-secondary" style="padding:12px 20px;font-size:0.92rem;">
+            Register as Patient
+          </a>
+        </div>
+      </div>
+
+      <div class="glass-card" style="padding:20px;text-align:center;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span class="badge badge-green">Physician HUD Preview</span>
+          <span style="font-size:0.75rem;color:var(--cyan);font-weight:600;">CNN 91.0% Conf • U-Net Active</span>
+        </div>
+        <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#000;position:relative;margin-bottom:14px;">
+          <img src="/static/samples/sample_polyp_1.jpg" alt="Colonoscopy Frame Analysis" style="width:100%;max-height:280px;object-fit:cover;display:block;">
+          <div style="position:absolute;bottom:10px;left:10px;right:10px;background:rgba(5,8,15,0.85);backdrop-filter:blur(8px);border:1px solid rgba(0,229,160,0.3);border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;">
+            <div style="text-align:left;">
+              <span style="color:var(--primary);font-weight:700;">● Lesion Localized</span>
+              <div style="color:var(--text-muted);font-size:0.72rem;">Paris Class: 0-Is (Sessile)</div>
+            </div>
+            <div style="text-align:right;">
+              <span style="color:var(--cyan);font-weight:700;">Est. 8.4 mm</span>
+              <div style="color:var(--text-muted);font-size:0.72rem;">Ascending Colon</div>
+            </div>
+          </div>
+        </div>
+        <div class="clinical-param-grid" style="margin-bottom:0;">
+          <div class="param-item">
+            <div class="param-key">Access Level</div>
+            <div class="param-val" style="color:var(--cyan);">Doctor / Specialist</div>
+          </div>
+          <div class="param-item">
+            <div class="param-key">Patient View</div>
+            <div class="param-val" style="color:var(--primary);">Approved Reports Only</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <div class="section-header">
+      <span class="badge badge-cyan" style="margin-bottom:12px;">Frequently Asked Questions</span>
+      <h2>Clinical & Technical Details</h2>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">What dataset is used to train and validate PolyScope? <span>+</span></div>
+      <div class="faq-answer">
+        PolyScope is designed for datasets such as Kvasir-SEG and Hyper-Kvasir, which provide thousands of expert-annotated polyp images and verified segmentation masks from routine colonoscopies.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">What happens if pre-trained deep learning weights are missing? <span>+</span></div>
+      <div class="faq-answer">
+        PolyScope includes an integrated, deterministic Computer Vision Feature Extractor that computes color-opponency and morphological contours out-of-the-box. The active engine is always transparently labeled.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">How does the system ensure data security and HIPAA alignment? <span>+</span></div>
+      <div class="faq-answer">
+        All API requests are protected with CSRF tokens, passwords are encrypted using salted scrypt hashing, and role-based access control segregates patient records from unauthorized viewers.
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>PolyScope AI</strong> — Academic Research Prototype for Colonoscopy Image Segmentation.
+        <div style="font-size:0.75rem;margin-top:4px;">Not clinically certified as a primary standalone diagnostic device.</div>
+      </div>
+      <div>
+        <a href="/login.html" style="margin-right:16px;">Sign In</a>
+        <a href="/register.html" style="margin-right:16px;">Patient Registration</a>
+        <a href="#hero">Back to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/ai_viewer.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      new PolyScopeViewer('heroViewer');
+
+      // Setup FAQ accordions
+      document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+          q.parentElement.classList.toggle('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
